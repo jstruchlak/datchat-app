@@ -1059,11 +1059,12 @@ app.get("/health", (req, res) => {
   });
 });
 
-// Start server
-app.listen(3001, () => {
-  console.log("Backend running on http://localhost:3001");
-  console.log("SpendBot is ready to analyze your spend data!");
 
-  console.log("Cleaning up old export files...");
+
+// Start server
+const PORT = process.env.PORT || 3001;
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`Backend running on port ${PORT}`);
+  console.log("SpendBot is ready to analyze your spend data!");
   ExportManager.cleanupOldExports();
 });

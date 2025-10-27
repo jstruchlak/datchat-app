@@ -9,6 +9,11 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-}
+  output: "standalone",
+  env: {
+    NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL,
+  },
+  swcMinify: true,
+};
 
-export default nextConfig
+export default nextConfig;

@@ -273,6 +273,7 @@ import dynamic from "next/dynamic";
 import SummaryCard from "@/components/summary-card";
 import remarkGfm from "remark-gfm";
 import { useState, useEffect, useRef } from "react";
+import { getApiEndpoint } from "@/lib/config";
 import axios from "axios";
 import ReactMarkdown from "react-markdown";
 import {
@@ -337,7 +338,7 @@ export default function ChatPage() {
     setIsLoading(true);
 
     try {
-       const res = await axios.post("http://localhost:3001/chat", {
+      const res = await axios.post(getApiEndpoint("/chat"), {
         message: input,
       });
 

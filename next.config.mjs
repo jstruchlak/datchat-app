@@ -18,7 +18,6 @@
 
 // export default nextConfig;
 
-
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   eslint: {
@@ -30,10 +29,12 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  output: 'standalone',
+  // This is CRITICAL for Azure deployment
+  output: "standalone",
+
   env: {
     NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL,
   },
-}
+};
 
-export default nextConfig
+export default nextConfig;

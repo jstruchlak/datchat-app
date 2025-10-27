@@ -1,0 +1,25 @@
+{
+  "name": "datchat-backend",
+  "version": "1.0.0",
+  "description": "Backend API for DataChat",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "latest",
+    "cors": "latest",
+    "dotenv": "latest",
+    "mssql": "^11.0.1",
+    "openai": "latest",
+    "axios": "latest",
+    "xlsx": "^0.18.5",
+    "jspdf": "^3.0.3",
+    "html2canvas": "^1.4.1"
+  }
+}

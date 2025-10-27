@@ -3,7 +3,7 @@
 Chat with your data" is an interactive analytics platform that lets users ask ad-hoc questions directly against their connected data sources using natural language. The platform generates visual artifacts such as charts and graphs, and allows users to export results for further analysis or sharing.​
 
 
-
+<!-- 
 # oiginal package.json - root
 
 {
@@ -106,3 +106,75 @@ Chat with your data" is an interactive analytics platform that lets users ask ad
     "typescript": "^5"
   }
 }
+ -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- # Original UI workflow
+
+name: Deploy UI to Azure
+
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - 'backend/**'
+  workflow_dispatch:
+
+env:
+  NEXT_PUBLIC_API_URL: https://datchat-api.azurewebsites.net
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+    
+    - name: Install dependencies
+      run: npm ci
+    
+    - name: Build application
+      run: npm run build
+      env:
+        NEXT_PUBLIC_API_URL: https://datchat-api.azurewebsites.net
+    
+    - name: Deploy to Azure
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: 'datchat-ui'
+        publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE_UI }}
+        package: .
+
+ -->
+
+
+
+<!-- ORIGINAL GITGNORE
+node_modules
+!.next
+.env
+.DS_Store
+*.log
+.vscode
+
+ -->

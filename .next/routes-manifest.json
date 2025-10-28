@@ -31,18 +31,6 @@
       "regex": "^/_not\\-found(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/_not\\-found(?:/)?$"
-    },
-    {
-      "page": "/category-manager",
-      "regex": "^/category\\-manager(?:/)?$",
-      "routeKeys": {},
-      "namedRegex": "^/category\\-manager(?:/)?$"
-    },
-    {
-      "page": "/leakage-analysis",
-      "regex": "^/leakage\\-analysis(?:/)?$",
-      "routeKeys": {},
-      "namedRegex": "^/leakage\\-analysis(?:/)?$"
     }
   ],
   "dataRoutes": [],

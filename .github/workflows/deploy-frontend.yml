@@ -18,39 +18,39 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: ${{ env.NODE_VERSION }}
-        cache: 'npm'
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
 
-    - name: Install dependencies
-      run: npm ci
+      - name: Install dependencies
+        run: npm ci
 
-    - name: Build Next.js application
-      env:
-        NEXT_PUBLIC_API_URL: https://datchat-api.azurewebsites.net
-      run: npm run build
+      - name: Build Next.js application
+        env:
+          NEXT_PUBLIC_API_URL: https://datchat-api.azurewebsites.net
+        run: npm run build
 
-    - name: Create deployment package
-      run: |
-        cp package.json .next/standalone/
-        cp -r .next/static .next/standalone/.next/
-        cp -r public .next/standalone/
-        cd .next/standalone
-        zip -r ../../frontend-deploy.zip . -x "*.git*"
+      - name: Create deployment package
+        run: |
+          cp package.json .next/standalone/
+          cp -r .next/static .next/standalone/.next/
+          cp -r public .next/standalone/
+          cd .next/standalone
+          zip -r ../../frontend-deploy.zip . -x "*.git*"
 
-    - name: Deploy to Azure Web App
-      uses: azure/webapps-deploy@v2
-      with:
-        app-name: ${{ env.AZURE_WEBAPP_NAME }}
-        publish-profile: ${{ secrets.AZURE_FRONTEND_PUBLISH_PROFILE }}
-        package: frontend-deploy.zip
+      - name: Deploy to Azure Web App
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: ${{ env.AZURE_WEBAPP_NAME }}
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE_UI }}
+          package: frontend-deploy.zip
 
-    - name: Health check
-      run: |
-        sleep 30
-        curl -f https://datchat-ui.azurewebsites.net/ || exit 1
+      - name: Health check
+        run: |
+          sleep 30
+          curl -f https://datchat-ui.azurewebsites.net/ || exit 1

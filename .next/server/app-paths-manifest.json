@@ -1,6 +1,4 @@
 {
   "/_not-found/page": "app/_not-found/page.js",
-  "/leakage-analysis/page": "app/leakage-analysis/page.js",
-  "/category-manager/page": "app/category-manager/page.js",
   "/page": "app/page.js"
 }

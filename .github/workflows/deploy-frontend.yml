@@ -1,0 +1,56 @@
+name: Deploy Frontend to Azure
+
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - 'backend/**'
+      - '.github/workflows/deploy-backend.yml'
+  workflow_dispatch:
+
+env:
+  NODE_VERSION: '20.x'
+  AZURE_WEBAPP_NAME: 'datchat-ui'
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Build Next.js application
+      env:
+        NEXT_PUBLIC_API_URL: https://datchat-api.azurewebsites.net
+      run: npm run build
+
+    - name: Create deployment package
+      run: |
+        cp package.json .next/standalone/
+        cp -r .next/static .next/standalone/.next/
+        cp -r public .next/standalone/
+        cd .next/standalone
+        zip -r ../../frontend-deploy.zip . -x "*.git*"
+
+    - name: Deploy to Azure Web App
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: ${{ env.AZURE_WEBAPP_NAME }}
+        publish-profile: ${{ secrets.AZURE_FRONTEND_PUBLISH_PROFILE }}
+        package: frontend-deploy.zip
+
+    - name: Health check
+      run: |
+        sleep 30
+        curl -f https://datchat-ui.azurewebsites.net/ || exit 1

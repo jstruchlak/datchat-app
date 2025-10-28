@@ -6,7 +6,7 @@
     "build": "next build",
     "dev": "next dev",
     "lint": "next lint",
-    "start": "next start"
+    "start": "node server.js"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
@@ -82,10 +82,12 @@
     "vaul": "^0.9.9",
     "ws": "latest",
     "xlsx": "^0.18.5",
-    "zod": "3.25.67"
+    "zod": "3.25.67",
+    "fs": "0.0.1-security",
+    "http": "0.0.1-security"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4.1.16",
+    "@tailwindcss/postcss": "^4.1.9",
     "@types/chart.js": "^4.0.1",
     "@types/node": "^22",
     "@types/react": "^18",

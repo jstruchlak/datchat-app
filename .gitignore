@@ -1,25 +1,55 @@
-# Dependencies
-node_modules
-backend/node_modules
-.next
-out
-dist
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+/backend/node_modules
 
-# Environment variables
+# testing
+/coverage
+
+# next.js
+/.next/
+/out/
+
+# production
+/build
+/backend/exports
+/backend/logs
+
+# misc
+.DS_Store
+*.pem
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# local env files
 .env
-.env.local
+.env*.local
 .env.development.local
 .env.test.local
 .env.production.local
-backend/.env
+/backend/.env
 
-# Azure deployment
-*.zip
-deployment/
-publish-profile.xml
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+# Azure
 *.PublishSettings
+publish/
 
-# System files
-.DS_Store
-*.log
-.vscode
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+Thumbs.db

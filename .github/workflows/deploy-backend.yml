@@ -1,0 +1,52 @@
+name: Deploy Backend to Azure
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'backend/**'
+      - '.github/workflows/deploy-backend.yml'
+  workflow_dispatch:
+
+env:
+  NODE_VERSION: '20.x'
+  AZURE_WEBAPP_NAME: 'datchat-api'
+  AZURE_WEBAPP_PACKAGE_PATH: './backend'
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+        cache-dependency-path: backend/package.json
+
+    - name: Install dependencies
+      run: |
+        cd backend
+        npm ci --production
+
+    - name: Create deployment package
+      run: |
+        cd backend
+        zip -r ../backend-deploy.zip . -x "*.git*" "node_modules/.cache/*"
+
+    - name: Deploy to Azure Web App
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: ${{ env.AZURE_WEBAPP_NAME }}
+        publish-profile: ${{ secrets.AZURE_BACKEND_PUBLISH_PROFILE }}
+        package: backend-deploy.zip
+
+    - name: Health check
+      run: |
+        sleep 30
+        curl -f https://datchat-api.azurewebsites.net/health || exit 1
